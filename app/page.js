@@ -64,10 +64,12 @@ export default function App() {
     setters[k](v);
   };
 
+  
   const nav = [
     ['Home', Brain],
     ['AI Hub', Brain],
     ['Jobs', HardHat],
+    ['Calendar', CalendarDays],
     ['Tasks', CheckSquare],
     ['Notes', FileText],
     ['Quotes', Calculator],
