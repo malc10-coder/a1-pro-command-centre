@@ -7,7 +7,7 @@ import {
   CheckSquare,
   FileText,
   Calculator,
-  CalanderDays,
+  CalendarDays,
   Camera,
   Search,
   Package,
