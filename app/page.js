@@ -607,8 +607,9 @@ function Quotes() {
   );
 }
 
-function Module({ name, jobs }) {
-  const map = {
+function Module({ name, jobs }) {   if (name === 'Routes') {
+    return <RoutesPlanner jobs={jobs} />;
+  }  const map = {
     Vision: Camera,
     Research: Search,
     Parts: Package,
