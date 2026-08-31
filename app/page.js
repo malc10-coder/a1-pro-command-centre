@@ -79,7 +79,7 @@ export default function App() {
     ['Team', Users],
     ['Cloud', Cloud],
     ['Settings', Settings]
-
+];
   return (
     <main>
       <aside>
