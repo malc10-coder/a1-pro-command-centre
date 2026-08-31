@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect,useMemo, useState } from 'react';
-import {supabase ) from '../supabase';
+import {supabase } from '../supabase';
   LayoutDashboard,
   Briefcase,
   CalendarDays,
