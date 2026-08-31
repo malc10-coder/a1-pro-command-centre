@@ -23,8 +23,7 @@ import {
   CheckCircle,
   Briefcase
 } from 'lucide-react';
-
-import './style.css';
+import { supabase } from '../supabase';import './style.css';
 
 const P = 'a1ultimate_';
 
