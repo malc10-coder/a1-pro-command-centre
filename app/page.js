@@ -78,7 +78,6 @@ export default function App() {
     ['Team', Users],
     ['Cloud', Cloud],
     ['Settings', Settings]
-  ];
 
   return (
     <main>
@@ -138,16 +137,19 @@ export default function App() {
             }
           />
         )}
+{tab === 'AI Hub' && <Hub chat={chat} put={put} />}
 
-        {tab === 'AI Hub' && <Hub chat={chat} put={put} />}
+{tab === 'Jobs' && <Jobs jobs={jobs} put={put} />}
 
-        {tab === 'Jobs' && <Jobs jobs={jobs} put={put} />}
+{tab === 'Calendar' && (
+  <Calendar jobs={jobs} put={put} />
+)}
 
-        {tab === 'Tasks' && <Tasks tasks={tasks} put={put} />}
+{tab === 'Tasks' && <Tasks tasks={tasks} put={put} />}
 
-        {tab === 'Notes' && <Notes notes={notes} put={put} />}
+{tab === 'Notes' && <Notes notes={notes} put={put} />}
 
-        {tab === 'Quotes' && <Quotes />}
+{tab === 'Quotes' && <Quotes />}        
 
         {[
           'Vision',
