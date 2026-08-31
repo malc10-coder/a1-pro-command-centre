@@ -713,3 +713,274 @@ function SettingsPage({ jobs, tasks, notes, chat }) {
     </div>
   );
 }
+function Calendar({ jobs, put }) {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [draggedJob, setDraggedJob] = useState(null);
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  const firstDay = new Date(year, month, 1);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const startDay = (firstDay.getDay() + 6) % 7;
+
+  const monthName = currentDate.toLocaleDateString('en-GB', {
+    month: 'long',
+    year: 'numeric'
+  });
+
+  const formatDate = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+
+    return `${y}-${m}-${d}`;
+  };
+
+  const previousMonth = () => {
+    setCurrentDate(
+      new Date(year, month - 1, 1)
+    );
+  };
+
+  const nextMonth = () => {
+    setCurrentDate(
+      new Date(year, month + 1, 1)
+    );
+  };
+
+  const moveJob = (newDate) => {
+    if (!draggedJob) return;
+
+    const updatedJobs = jobs.map((job) =>
+      job.id === draggedJob.id
+        ? {
+            ...job,
+            date: newDate
+          }
+        : job
+    );
+
+    put('jobs', updatedJobs);
+    setDraggedJob(null);
+  };
+
+  const jobsForDate = (date) => {
+    return jobs.filter(
+      (job) => job.date === date
+    );
+  };
+
+  const cells = [];
+
+  for (let i = 0; i < startDay; i++) {
+    cells.push(null);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    cells.push(
+      new Date(year, month, day)
+    );
+  }
+
+  while (cells.length % 7 !== 0) {
+    cells.push(null);
+  }
+
+  return (
+    <div className="panel">
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '20px'
+        }}
+      >
+
+        <button
+          onClick={previousMonth}
+          className="secondary"
+          type="button"
+        >
+          ←
+        </button>
+
+        <div style={{ textAlign: 'center' }}>
+          <h2 style={{ margin: 0 }}>
+            📅 Calendar
+          </h2>
+
+          <p style={{ margin: '5px 0 0' }}>
+            {monthName}
+          </p>
+        </div>
+
+        <button
+          onClick={nextMonth}
+          className="secondary"
+          type="button"
+        >
+          →
+        </button>
+
+      </div>
+
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns:
+            'repeat(7, minmax(0, 1fr))',
+          gap: '8px'
+        }}
+      >
+
+        {[
+          'Mon',
+          'Tue',
+          'Wed',
+          'Thu',
+          'Fri',
+          'Sat',
+          'Sun'
+        ].map((day) => (
+          <div
+            key={day}
+            style={{
+              padding: '10px',
+              fontWeight: 700,
+              textAlign: 'center',
+              color: '#8fa7b8'
+            }}
+          >
+            {day}
+          </div>
+        ))}
+
+        {cells.map((date, index) => {
+
+          const dateString = date
+            ? formatDate(date)
+            : '';
+
+          const dayJobs = date
+            ? jobsForDate(dateString)
+            : [];
+
+          return (
+            <div
+              key={index}
+              onDragOver={(event) => {
+                if (date) {
+                  event.preventDefault();
+                }
+              }}
+              onDrop={() => {
+                if (date) {
+                  moveJob(dateString);
+                }
+              }}
+              style={{
+                minHeight: '120px',
+                padding: '8px',
+                border:
+                  '1px solid rgba(120,170,200,0.25)',
+                borderRadius: '8px',
+                background: date
+                  ? 'rgba(255,255,255,0.03)'
+                  : 'transparent',
+                opacity: date ? 1 : 0.25
+              }}
+            >
+
+              {date && (
+                <>
+                  <div
+                    style={{
+                      fontWeight: 700,
+                      marginBottom: '8px'
+                    }}
+                  >
+                    {date.getDate()}
+                  </div>
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '6px'
+                    }}
+                  >
+
+                    {dayJobs.map((job) => (
+                      <div
+                        key={job.id}
+                        draggable
+                        onDragStart={() =>
+                          setDraggedJob(job)
+                        }
+                        style={{
+                          padding: '7px',
+                          borderRadius: '6px',
+                          background:
+                            'rgba(91,190,235,0.18)',
+                          border:
+                            '1px solid rgba(91,190,235,0.35)',
+                          cursor: 'grab',
+                          fontSize: '12px'
+                        }}
+                      >
+
+                        <strong>
+                          {job.name || 'Job'}
+                        </strong>
+
+                        <div
+                          style={{
+                            marginTop: '3px',
+                            opacity: 0.75
+                          }}
+                        >
+                          {job.status}
+                        </div>
+
+                      </div>
+                    ))}
+
+                  </div>
+                </>
+              )}
+
+            </div>
+          );
+        })}
+
+      </div>
+
+      <div
+        style={{
+          marginTop: '18px',
+          padding: '12px',
+          borderRadius: '8px',
+          background:
+            'rgba(255,255,255,0.04)'
+        }}
+      >
+        <strong>Drag & drop scheduling</strong>
+
+        <div
+          style={{
+            marginTop: '4px',
+            opacity: 0.75
+          }}
+        >
+          Drag a job onto another day to
+          reschedule it.
+        </div>
+      </div>
+
+    </div>
+  );
+}
