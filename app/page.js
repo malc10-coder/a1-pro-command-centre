@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 
 import './style.css';
-
+import RoutePlanner from './route-planner';
 const P = 'a1ultimate_';
 
 const get = (k, d) => {
@@ -162,8 +162,7 @@ export default function App() {
           'Reports',
           'Team',
           'Cloud'
-        ].includes(tab) && <Module name={tab} jobs={jobs} />}
-
+       ].includes(tab) && (tab === 'Routes' ? <RoutePlanner jobs={jobs} /> : <Module name={tab} jobs={jobs} />)}
         {tab === 'Settings' && (
           <SettingsPage
             jobs={jobs}
