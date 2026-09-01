@@ -1,4 +1,4 @@
-'use client';
+Fucks sake'use client';
 
 import { useMemo, useState } from 'react';
 import {
@@ -644,7 +644,10 @@ export default function App() {
             </div>
           )}
 
-          {/* ENGINEERS */}
+{/* ROUTES */}
+{activeTab === 'Routes' && (
+  <div className="page-content"> <RoutePlanner jobs={jobs} engineers={engineers} /> </div> )}
+{/* ENGINEERS */}
 
           {activeTab === 'Engineers' && (
             <div className="page-content">
