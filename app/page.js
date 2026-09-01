@@ -187,6 +187,7 @@ export default function App() {
     { name: 'Dashboard', icon: LayoutDashboard },
     { name: 'Jobs', icon: Briefcase },
     { name: 'Calendar', icon: CalendarDays },
+    { name: 'Routes', icon: MapPin },
     { name: 'Customers', icon: Users },
     { name: 'Engineers', icon: UserRound },
     { name: 'Materials', icon: Package },
