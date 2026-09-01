@@ -352,8 +352,12 @@ engineer
           onChange={(e) => setN(e.target.value)}
           placeholder="Job name"
         />
-
-        <input
+<input
+value={customer}
+onChange={(e) => setCustomer(e.target.value)}
+placeholder="Customer name"
+/>
+          <input
           type="date"
           value={d}
           onChange={(e) => setD(e.target.value)}
