@@ -311,16 +311,26 @@ function Hub({ chat, put }) {
 
 function Jobs({ jobs, put }) {
   const [n, setN] = useState('');
-  const [d, setD] = useState('');
+const [customer, setCustomer] = useState('');
+const [address, setAddress] = useState('');
+const [postcode, setPostcode] = useState('');
+const [d, setD] = useState('');
+const [time, setTime] = useState('');
+const [engineer, setEngineer] = useState('');
 
   const add = () => {
     if (n) {
       put('jobs', [
         {
-          id: Date.now(),
-          name: n,
-          status: 'Planned',
-          date: d
+        id: Date.now(),
+name: n,
+customer,
+address,
+postcode,
+status: 'Planned',
+date: d,
+time,
+engineer
         },
         ...jobs
       ]);
@@ -425,9 +435,9 @@ function Tasks({ tasks, put }) {
             if (n) {
               put('tasks', [
                 {
-                  id: Date.now(),
-                  name: n,
-                  done: false
+id: Date.now(),
+name: n,
+      done: false
                 },
                 ...tasks
               ]);
